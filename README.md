@@ -1,5 +1,3 @@
-// README.md
-
 # 📝 Sticky Notes App
 
 A simple sticky notes web application built with **React** and **TypeScript**. Users can create, move, resize, and edit notes right in the browser. Notes persist between sessions via `localStorage`.
@@ -64,6 +62,11 @@ http://localhost:3000
 - TypeScript
 - HTML/CSS
 - LocalStorage (Browser API)
+
+---
+
+## 📸 Screenshot
+![image](https://github.com/user-attachments/assets/c7767786-0526-4da5-bf71-59651b38943a)
 
 ---
 
