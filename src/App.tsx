@@ -1,48 +1,30 @@
-import React, { useState, useEffect } from 'react';
-import { Note } from './types/note';
-import { getInitialNotes, saveNotes } from './utils/storage';
+import React, { useState } from 'react';
 import StickyNote from './components/StickyNote';
+import { useNotes } from './hooks/useNotes';
 
 const App: React.FC = () => {
-  const [notes, setNotes] = useState<Note[]>(getInitialNotes);
-  const [zTop, setZTop] = useState(1);
-
-  useEffect(() => {
-    saveNotes(notes);
-  }, [notes]);
-
-  const createNote = () => {
-    const id = crypto.randomUUID();
-    const newNote: Note = {
-      id,
-      x: 100,
-      y: 100,
-      width: 200,
-      height: 200,
-      text: '',
-      color: '#fffa65',
-      zIndex: zTop + 1,
-    };
-    setZTop(zTop + 1);
-    setNotes([...notes, newNote]);
-  };
-
-  const updateNote = (id: string, changes: Partial<Note>) => {
-    setNotes(prev =>
-      prev.map(note => (note.id === id ? { ...note, ...changes } : note))
-    );
-  };
+  const [selectedColor, setSelectedColor] = useState('#fffa65');
+  const { notes, createNote, updateNote, bringToFront } = useNotes();
 
   return (
     <div className="app">
-      <button onClick={createNote}>Create Note</button>
+      <div style={{ marginBottom: '0.5rem' }}>
+        <label htmlFor="color">Choose color:</label> &nbsp;
+        <input
+          id="color"
+          type="color"
+          value={selectedColor}
+          onChange={e => setSelectedColor(e.target.value)}
+        />{' '}
+        <button onClick={() => createNote(selectedColor)}>Create Note</button>
+      </div>
       <div className="canvas">
         {notes.map(note => (
           <StickyNote
             key={note.id}
             note={note}
             onUpdate={updateNote}
-            onTop={() => setZTop(zTop + 1)}
+            onTop={() => bringToFront(note.id)}
           />
         ))}
       </div>

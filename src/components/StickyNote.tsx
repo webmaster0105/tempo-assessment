@@ -1,4 +1,3 @@
-// components/StickyNote.tsx
 import React, { useRef } from 'react';
 import { Note } from '../types/note';
 
@@ -13,7 +12,6 @@ const StickyNote: React.FC<StickyNoteProps> = ({ note, onUpdate, onTop }) => {
 
   const onMouseDown = (e: React.MouseEvent) => {
     onTop();
-    onUpdate(note.id, { zIndex: note.zIndex + 1 });
     const startX = e.clientX;
     const startY = e.clientY;
     const origX = note.x;
